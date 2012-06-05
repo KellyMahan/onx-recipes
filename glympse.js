@@ -36,8 +36,23 @@ console.log('Started script: Glympse ' + friend.name + ' when I ' + action + ' '
       );
   });
 
-  // start monitoring the region
-  device.regions.startMonitoring(region);
+  // battery saving stuff
+  device.battery.on("startedCharging", function (signal){
+    // start monitoring the region
+    device.regions.startMonitoring(region);
+  });
+  device.battery.on("stoppedCharging", function (signal){
+    // stop monitoring the region
+    if(signal.percentage < 70){
+      device.regions.stopMonitoring(region);
+    }
+  });
+  device.battery.on('updated', function (signal){
+    // stop monitoring the region
+    if(signal.percentage < 70){
+      device.regions.stopMonitoring(region);
+    }
+  });
   console.log('Completed script: Glympse ' + friend.name +  ' when I ' + action + ' ' + location.name);
   
   // Debugging code
