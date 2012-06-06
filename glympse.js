@@ -21,7 +21,7 @@ console.log('Started script: Glympse ' + friend.name + ' when I ' + action + ' '
       latitude: parseFloat(location.latitude, 10),
       longitude: parseFloat(location.longitude, 10),
       name: location.name,
-      radius: 1000
+      radius: 200
   });
 
   // register a callback which sends a message when entering/exiting the region (depends on action)
