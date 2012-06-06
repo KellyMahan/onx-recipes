@@ -9,6 +9,7 @@
 var friend = { name : "my wife", number: "01234567890"} ;
 var messageText = "My battery is about to die.";
 var message_sent = false;
+var plugged_in = false;
 var low_bat = 10;
 
 // End of variables initializing 
@@ -25,10 +26,14 @@ var low_bat = 10;
   }
 
   device.battery.on("startedCharging", function (signal){
+    plugged_in = true;
     message_sent = false;
   });
+  device.battery.on("stoppedCharging", function (signal){
+    plugged_in = false;
+  });
   device.battery.on('updated', function (signal){
-    if(signal.percentage < low_bat && !message_sent){
+    if(signal.percentage < low_bat && !message_sent && !plugged_in){
       send_message();
       message_sent = true;
     }
